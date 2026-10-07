@@ -1,11 +1,12 @@
 // Menu na telefonie
-document.querySelectorAll('.menu-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const side = btn.closest('.side');
-    const open = side.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open);
-  });
-});
+const side = document.querySelector('.side');
+const toggle = document.querySelector('.menu-toggle');
+const setMenu = open => {
+  side.classList.toggle('open', open);
+  toggle.setAttribute('aria-expanded', open);
+};
+toggle.addEventListener('click', () => setMenu(!side.classList.contains('open')));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
 // Formularze: wysyłka prosto do Google Forms (odpowiedzi lądują w tym samym arkuszu co dotąd).
 // Nazwy pól w HTML to identyfikatory "entry.XXXX" z oryginalnych formularzy Google.
