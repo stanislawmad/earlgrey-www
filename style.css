@@ -5,7 +5,7 @@
   --accent: #f2a516;   /* pomarańcz z logo EG */
   --blue: #3b82f6;     /* przycisk wg makiety klienta */
 
-  --menu-w: 310px;     /* szerokość kolumny menu = szerokość fasoli */
+  --menu-w: 360px;     /* szerokość kolumny menu = szerokość fasoli */
   --pad-x: 48px;       /* margines boczny */
   --pad-y: 56px;       /* margines górny – ten sam dla menu i treści */
   --gap: 56px;         /* odstęp między menu a treścią */
@@ -47,7 +47,7 @@ a { color: inherit; }
 .nav { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .nav a {
   display: block; padding: 4px 0;
-  font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ink);
+  font-size: 16px; line-height: 1.4; text-decoration: none; color: var(--ink);
   transition: color .15s;
 }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--accent); }
@@ -55,7 +55,7 @@ a { color: inherit; }
 .social { display: flex; gap: 4px; margin-left: -8px; }
 .social a { color: var(--ink); padding: 8px; transition: color .15s; }
 .social a:hover { color: var(--accent); }
-.social svg { width: 16px; height: 16px; display: block; }
+.social svg { width: 18px; height: 18px; display: block; }
 
 .menu-toggle { display: none; }
 
@@ -122,14 +122,14 @@ main:has(.reel) { padding-bottom: var(--pad-y); }
 
 /* ---------- duże monitory: menu i fasola proporcjonalnie większe ---------- */
 @media (min-width: 1600px) {
-  :root { --menu-w: 360px; --pad-x: 64px; --gap: 72px; --pad-y: 64px; }
-  .nav a { font-size: 16px; }
-  .social svg { width: 18px; height: 18px; }
+  :root { --menu-w: 410px; --pad-x: 64px; --gap: 72px; --pad-y: 64px; }
+  .nav a { font-size: 18px; }
+  .social svg { width: 21px; height: 21px; }
 }
 
 /* ---------- mniejsze laptopy / tablety poziomo ---------- */
 @media (max-width: 1200px) {
-  :root { --menu-w: 230px; --pad-x: 36px; --gap: 40px; --pad-y: 44px; }
+  :root { --menu-w: 250px; --pad-x: 36px; --gap: 40px; --pad-y: 44px; }
 }
 
 /* ---------- telefon / tablet pionowo ---------- */
@@ -172,7 +172,7 @@ main:has(.reel) { padding-bottom: var(--pad-y); }
   .side.open > nav { display: block; width: 100%; padding-top: 12px; }
   .side.open .social { display: flex; width: 100%; padding: 4px 0 8px; }
   .nav { gap: 0; }
-  .nav a { padding: 10px 0; font-size: 16px; }   /* wygodne pole pod palec */
+  .nav a { padding: 10px 0; font-size: 18px; }   /* wygodne pole pod palec */
 
   main { padding: var(--pad-y) max(var(--pad-x), env(safe-area-inset-right)) 48px max(var(--pad-x), env(safe-area-inset-left)); }
 
