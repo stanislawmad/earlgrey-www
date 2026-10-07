@@ -4,7 +4,7 @@
   --line: #e5e5e5;
   --accent: #f2a516;   /* pomarańcz z logo EG */
   --blue: #3b82f6;     /* przycisk wg makiety klienta */
-  --side: 220px;
+  --menu-w: 310px;   /* szerokość kolumny menu = szerokość fasoli */
 }
 
 * { box-sizing: border-box; }
@@ -18,17 +18,18 @@ img, video { display: block; max-width: 100%; }
 a { color: inherit; }
 
 /* ---------- układ: menu z lewej, treść z prawej ---------- */
-.layout { display: grid; grid-template-columns: var(--side) 1fr; min-height: 100vh; }
+html { scrollbar-gutter: stable; }
+.layout { display: grid; grid-template-columns: calc(var(--menu-w) + 72px) 1fr; min-height: 100vh; }
 
 .side {
   position: sticky; top: 0; height: 100vh;
   padding: 56px 24px 40px 48px;
   display: flex; flex-direction: column; gap: 40px;
 }
-.side .logo img { width: 110px; height: auto; }
+.side .logo img { width: var(--menu-w); height: auto; }
 .mafs-logo { width: 100%; max-width: 440px; height: auto; margin: 0 auto 24px; }
 .nav { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.nav a { text-decoration: none; font-size: 14px; line-height: 1.4; color: var(--ink); display: block; }
+.nav a { text-decoration: none; font-size: 14px; line-height: 1.4; color: var(--ink); display: block; white-space: nowrap; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--accent); }
 .social { display: flex; gap: 12px; }
 .social a { color: var(--ink); }
@@ -83,13 +84,15 @@ p { margin: 0 0 16px; }
 
 /* ---------- telefon / tablet ---------- */
 @media (max-width: 860px) {
-  .layout { grid-template-columns: 1fr; }
+  .layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
   .side {
     position: sticky; top: 0; z-index: 10; height: auto; background: #fff;
     flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between;
     padding: 12px 16px; gap: 12px; border-bottom: 1px solid var(--line);
   }
-  .side .logo img { width: 56px; }
+  .side .logo { flex: 1; min-width: 0; }
+  .side .logo img { width: 100%; max-width: 310px; }
+  .nav a { white-space: normal; }
   .menu-toggle {
     display: block; background: none; border: 1px solid var(--ink); border-radius: 4px;
     font: 500 14px "Inter", sans-serif; padding: 6px 12px; color: var(--ink);
