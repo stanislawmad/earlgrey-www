@@ -148,7 +148,7 @@ main:has(.reel) { padding-bottom: var(--pad-y); }
     -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
   }
-  .side .logo img { width: auto; height: 64px; }
+  .side .logo img { width: auto; height: 40px; }   /* = wysokość przycisku Menu */
 
   .menu-toggle {
     display: inline-flex; align-items: center; gap: 8px;
@@ -190,11 +190,11 @@ main:has(.reel) { padding-bottom: var(--pad-y); }
     gap: 0 16px; padding: 8px max(var(--pad-x), env(safe-area-inset-right)) 8px max(var(--pad-x), env(safe-area-inset-left));
     border-bottom: 1px solid var(--line);
   }
-  .side .logo img { width: auto; height: 40px; }
+  .side .logo img { width: auto; height: 36px; }   /* = wysokość przycisku Menu */
   .menu-toggle { min-height: 36px; }
   main { padding-top: 12px; }
-  /* wysokość okna minus nagłówek (40 px logo + 2×8 px + 1 px linii) i odstępy nad/pod filmem */
-  .reel { width: auto; height: calc(var(--vh) - 57px - 24px); max-width: 100%; margin: 0 auto; }
+  /* wysokość okna minus nagłówek (36 px logo + 2×8 px + 1 px linii) i odstępy nad/pod filmem */
+  .reel { width: auto; height: calc(var(--vh) - 53px - 24px); max-width: 100%; margin: 0 auto; }
   main:has(.reel) { padding-bottom: 12px; }
 }
 
@@ -202,11 +202,6 @@ main:has(.reel) { padding-bottom: var(--pad-y); }
 @media (max-width: 480px) {
   .form-card { border: 0; box-shadow: none; border-radius: 0; padding: 4px 0 0; }
   .form-card h2 { font-size: 20px; }
-}
-
-/* bardzo wąskie telefony (iPhone SE 1. gen. itp.) */
-@media (max-width: 360px) {
-  .side .logo img { height: 52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
