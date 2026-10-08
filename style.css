@@ -71,6 +71,9 @@ main { min-width: 0; padding: var(--pad-y) 0 80px; }
 }
 main:has(.reel) { padding-bottom: var(--pad-y); }
 
+/* ---------- 404 ---------- */
+.notfound { margin: 0; }
+
 /* ---------- strony z formularzem ---------- */
 .form-page { max-width: 520px; margin: 0 auto; }
 .mafs-logo { width: 100%; max-width: 420px; height: auto; margin: 0 auto 28px; }

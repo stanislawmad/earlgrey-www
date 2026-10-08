@@ -1,0 +1,77 @@
+# EarlGrey – konfiguracja serwera (home.pl, zgodna z Apache)
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+AddType video/mp4 .mp4
+AddDefaultCharset utf-8
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # --- 1. Zawsze https://earlgreyfilm.com (bez www) ---------------------------
+  # Jeśli po wgraniu strona „kręci się” w nieskończonej pętli przekierowań,
+  # zakomentuj 4 linie poniżej (#) i włącz „Wymuś SSL” w panelu home.pl.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://earlgreyfilm.com%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://earlgreyfilm.com%{REQUEST_URI} [R=301,L]
+
+  # --- 2. Stare adresy WordPressa → nowe strony --------------------------------
+  # (linki w postach na Facebooku, reklamach, wynikach Google)
+  RewriteRule ^index\.php/strona-glowna/?$  https://earlgreyfilm.com/                [R=301,L,NC]
+  RewriteRule ^index\.php/informacje/?$     https://earlgreyfilm.com/zgloszenia.html [R=301,L,NC]
+  RewriteRule ^index\.php/praca/?$          https://earlgreyfilm.com/praca.html      [R=301,L,NC]
+  RewriteRule ^index\.php/wspolpraca/?$     https://earlgreyfilm.com/wspolpraca.html [R=301,L,NC]
+  RewriteRule ^index\.php(/.*)?$            https://earlgreyfilm.com/                [R=301,L,NC]
+  RewriteRule ^index\.html$                 https://earlgreyfilm.com/                [R=301,L]
+
+  # stare adresy z parametrami (?page_id=13 itp.)
+  RewriteCond %{QUERY_STRING} (^|&)page_id=13(&|$)
+  RewriteRule ^$ https://earlgreyfilm.com/zgloszenia.html? [R=301,L]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=91(&|$)
+  RewriteRule ^$ https://earlgreyfilm.com/praca.html? [R=301,L]
+  RewriteCond %{QUERY_STRING} (^|&)page_id=92(&|$)
+  RewriteRule ^$ https://earlgreyfilm.com/wspolpraca.html? [R=301,L]
+  RewriteCond %{QUERY_STRING} (^|&)(page_id|p)=\d+(&|$)
+  RewriteRule ^$ https://earlgreyfilm.com/? [R=301,L]
+
+  # pozostałości WordPressa (panel, wtyczki, mapa strony) – strona główna
+  RewriteRule ^(wp-admin|wp-content|wp-includes|wp-json)(/.*)?$ https://earlgreyfilm.com/ [R=301,L,NC]
+  RewriteRule ^(wp-login|xmlrpc|wp-sitemap[^/]*)\.(php|xml)$  https://earlgreyfilm.com/ [R=301,L,NC]
+  RewriteRule ^(feed|comments/feed)/?$ https://earlgreyfilm.com/ [R=301,L,NC]
+</IfModule>
+
+# --- 3. Pamięć przeglądarki ------------------------------------------------------
+# Strony HTML zawsze świeże; style, skrypty, obrazki i film zapamiętywane.
+# Po podmianie pliku zmień jego ?v=… w HTML (np. showreel.mp4?v=20261008 → ?v=20261120),
+# wtedy wszyscy od razu dostaną nową wersję.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                          "access plus 1 hour"
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType text/javascript           "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 year"
+</IfModule>
+
+# --- 4. Kompresja tekstu ----------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript text/javascript application/xml image/svg+xml
+</IfModule>
+
+# --- 5. Podstawowe nagłówki bezpieczeństwa ------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
