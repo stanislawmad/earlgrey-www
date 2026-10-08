@@ -67,6 +67,7 @@ main { min-width: 0; padding: var(--pad-y) 0 80px; }
   width: min(100%, calc((var(--vh) - 2 * var(--pad-y)) * 16 / 9));
   aspect-ratio: 16 / 9; height: auto;
   background: #fff; object-fit: contain;
+  pointer-events: none;   /* pokaz slajdów: bez pauzy, menu kontekstowego itp. */
 }
 main:has(.reel) { padding-bottom: var(--pad-y); }
 

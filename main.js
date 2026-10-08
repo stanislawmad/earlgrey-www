@@ -35,3 +35,14 @@ document.querySelectorAll('form[data-google-form]').forEach(form => {
     }
   });
 });
+
+// Pokaz slajdów: gdy telefon zablokuje autoodtwarzanie (np. tryb oszczędzania energii),
+// ruszamy przy pierwszym dotknięciu/przewinięciu strony.
+const reel = document.querySelector('.reel');
+if (reel) {
+  const start = () => reel.play().catch(() => {});
+  start();
+  ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach(ev =>
+    addEventListener(ev, () => { if (reel.paused) start(); }, { once: true, passive: true }));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && reel.paused) start(); });
+}
